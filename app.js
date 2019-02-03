@@ -5,6 +5,11 @@ const server = http.createServer((req, res) => {
     res.write('Hello world!');
     res.end();
   }
+
+  if (req.url === '/api/numbers') {
+    res.write(JSON.stringify([1,2,3]));
+    res.end();
+  }
 });
 
 server.listen(3000);
