@@ -20,9 +20,14 @@ app.get('/api/courses', (req, res) => {
 });
 
 app.post('/api/courses', (req, res) => {
-  if (!req.body.name || req.body.name.length < 3) {
-    // 400 Bad request
-    res.status(400).send('Name is reuqired and should have a minimum of three characters.')
+
+  const schema = {
+     name: Joi.string().min(3).required()
+  };
+
+  const result = Joi.validate(req.body, schema);
+  if (result.error) {
+    res.status(400).send(result.error.details[0].message);
     return;
   }
 
