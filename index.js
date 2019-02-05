@@ -43,7 +43,10 @@ app.get('/api/courses/:id', (req, res) => {
 
 app.put('/api/courses/:id', (req, res) => {
   const course = courses.find( c => c.id === parseInt(req.params.id))
-  if (!course) res.status(404).send('The course with the given id was not found.');
+  if (!course) {
+    res.status(404).send('The course with the given id was not found.');
+    return;
+  }
 
   const { error } = validateCourse(req.body);
   if (error) {
@@ -57,7 +60,10 @@ app.put('/api/courses/:id', (req, res) => {
 
 app.delete('/api/courses/:id', (req, res) => {
   const course = courses.find( c => c.id === parseInt(req.params.id))
-  if (!course) res.status(404).send('The course with the given id was not found.');
+  if (!course) {
+    res.status(404).send('The course with the given id was not found.');
+    return;
+  }
 
   const index = courses.indexOf(course);
   courses.splice(index, 1);
